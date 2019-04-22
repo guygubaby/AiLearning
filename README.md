@@ -1,2 +1,3 @@
-learn ai with project [AiLearning](https://github.com/apachecn/AiLearning)
+learn AI with project [AiLearning](https://github.com/apachecn/AiLearning)
+
 fighting ~
