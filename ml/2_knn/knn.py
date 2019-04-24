@@ -13,6 +13,12 @@ KNN 工作原理
     3.求 k 个数据中出现次数最多的分类标签作为新数据的分类。
 '''
 
+'''
+    归一化的具体作用是归纳统一样本的统计分布性。
+    归一化在0-1之间是统计的概率分布，
+    归一化在-1--+1之间是统计的坐标分布。
+'''
+
 def file2matrix(file_path):
     """
        Desc:
@@ -37,15 +43,37 @@ def file2matrix(file_path):
     return return_matrix,label_vector
 
 
+def auto_normal(data_set):
+    '''
+    Desc：
+        归一化特征值，消除属性之间量级不同导致的影响
+    :param data_set:
+        需要处理的数据集
+    :return:
+        normDataSet -- 归一化处理后得到的数据集
+    归一化公式：
+        Y = (X-Xmin)/(Xmax-Xmin)
+        其中的 min 和 max 分别是数据集中的最小特征值和最大特征值。该函数可以自动将数字特征值转化为0到1的区间。
+    '''
+    min_val=np.min(data_set)[0]
+    max_val=np.max(data_set)[0]
+
+    print('min : {} max : {} '.format(min_val,max_val))
+    ranges=max_val-min_val
+    norm_dataset = (data_set - min_val) / ranges
+    return norm_dataset
+
+
 if __name__ == '__main__':
     ret,class_label=file2matrix('../../data/ml/knn/datingTestSet2.txt')
     ret=np.mat(ret)
     class_label=np.array(class_label)
 
     fig=plt.figure()
+
     ax=fig.add_subplot(111)
     # ax.scatter(np.array(ret[:,0])[:,0],15*class_label[:],label='111')
 
-    scatters=ax.scatter(np.array(ret[:,0])[:,0],np.array(ret[:,1])[:,0],np.array(ret[:,2])[:,0],15*class_label[:],label=['11','22','33'])
+    scatters=ax.scatter(np.array(ret[:,0])[:,0],np.array(ret[:,1])[:,0],np.array(ret[:,2])[:,0],15*class_label[:])
     plt.legend()
     plt.show()
